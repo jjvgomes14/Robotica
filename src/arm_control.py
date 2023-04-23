@@ -21,42 +21,16 @@ class arm_control():
         self.action_client_close.wait_for_server()
 
         self.base  = [-0.1000,  0.0, 0.615];
-        self.home  = [ 0.4000,  0.0, 0.615];
-        self.blue  = [-0.4652, -0.5, 0.615];
-        self.half  = [-0.4652,  0.0, 0.615];
-        self.green = [-0.4652,  0.5, 0.615];
-
-# gCan1 greenCan  -0.1067 0.3634 0.69  0.00  -0.01  0.00
-# gCan2 greenCan  0.2191 -0.0220 0.5548  1.57  -1.55  0.01
-# gCan3 greenCan  -0.0809 -0.6600 0.5858  0.00  -0.00  -1.73
-# gCan4 greenCan  0.3690 -0.5296 0.6768  0.00  -0.00  -2.99
-
-# rCan1 redCan  0.295 0.5031 0.5857  3.14  -0.00  3.00
-# rCan2 redCan  -0.0809 -0.6600 0.740  3.14  -0.00  0.00
-# rCan3 redCan  0.70 0.0322 0.5857  3.14  -0.00  0.66
-
-# yCan1 yellowCan  0.60 0.1722 0.5856  3.14  -0.00  1.30
-# yCan2 yellowCan  0.55 -0.4821 0.5718  -1.57  0.10  -0.83
-# yCan3 yellowCan  0.36 -0.45 0.61  0.00  -0.00  -2.95
-# yCan4 yellowCan  0.26 -0.42 0.61  -1.57  -1.09  2.18
-
-# rBottle1 redBottle  0.22 0.62 0.556  1.57  -0.42  1.53
-# rBottle2 redBottle  0.820 0.00 0.5558  1.57  -0.10  0.00
-
-# bBottle1 blueBottle  -0.17 -0.46 0.6339  0.00  -0.00  -0.00
-# bBottle2 blueBottle  0.0734 0.2300 0.6338  0.00  -0.00  0.00
-# bBottle3 blueBottle  0.2630 -0.2251 0.5554  1.61  1.56  1.61
-
-# yBottle1 yellowBottle  -0.1430 0.5264 0.5558  1.57  1.47  1.58
-# yBottle2 yellowBottle  0.680 -0.1600 0.6093  0.00  -0.00  0.00
-# yBottle3 yellowBottle  0.3064 0.1509 0.6339  0.00  0.00  -0.01
-# yBottle4 yellowBottle  0.2430 -0.6251 0.7558  1.57  1.47  1.58
+        self.home  = [ 0.1000,  0.0, 1.000];
+        self.blue  = [-0.4652, -0.5, 0.800];
+        self.green = [-0.4652,  0.5, 0.800];
 
         destinations = [
-            ['bBottle1' ,'blueBottle' ,'blue', -0.1700, -0.4600, 0.6339],
-            ['rCan2'    ,'redCan'     ,'blue', -0.0809, -0.6600, 0.7400],
-            ['gCan1'    ,'greenCan'   ,'blue', -0.1067,  0.3634, 0.6900],
-            ['rCan1'    ,'redCan'     ,'blue',  0.2950,  0.5031, 0.5857],
+            ['bBottle1' ,'blue' , 'bottle' ,'blue', -0.1700, -0.4600, 0.6135],
+            ['rCan2'    ,'red'  , 'can'    ,'blue', -0.0774, -0.6800, 0.6901],
+            ['gCan3'    ,'green', 'can'    ,'blue', -0.0771, -0.6800, 0.5734],
+            # ['gCan1'    ,'green', 'can'    ,'blue', -0.1067,  0.3634, 0.6900],
+            # ['rCan1'    ,'red'  , 'can'    ,'blue',  0.2950,  0.5031, 0.5857],
         ]
 
         rospy.loginfo(f'Going to home.')
@@ -65,8 +39,16 @@ class arm_control():
 
         for d in destinations:
 
+            shift1 = 0.15 # em cima do objeto
+
+            if(d[2]=='bottle'):
+                shift2 = 0.06  # no ponto de grasp
+            if(d[2]=='can'):
+                shift2 = 0.02  # no ponto de grasp
+
+
             rospy.loginfo(f'Going to {d[0]} head.')
-            self.goto(d[3],d[4],d[5]+0.1)       
+            self.goto(d[4],d[5],d[6]+shift1)       
             self.wait(self.time_to_wait)  
 
             rospy.loginfo(f'Open gripper')
@@ -74,32 +56,28 @@ class arm_control():
             self.wait(self.time_to_wait)  
 
             rospy.loginfo(f'Going to {d[0]} pose.')
-            self.goto(d[3],d[4],d[5])       
+            self.goto(d[4],d[5],d[6]+shift2)       
             self.wait(self.time_to_wait)  
 
             rospy.loginfo(f'Close gripper')
             self.gripper_close()
             self.wait(self.time_to_wait)  
 
-            rospy.loginfo(f'Going to half.')
-            self.goto(self.half[0],self.half[1],self.half[2])       
+            rospy.loginfo(f'Going to {d[0]} head.')
+            self.goto(d[4],d[5],d[6]+shift1)       
             self.wait(self.time_to_wait)  
 
-            if(d[2] == 'blue'):
+            if(d[3] == 'blue'):
                 rospy.loginfo(f'Going to blue.')
                 self.goto(self.blue[0],self.blue[1],self.blue[2])       
                 self.wait(self.time_to_wait)  
-            if(d[2] == 'green'):
+            if(d[3] == 'green'):
                 rospy.loginfo(f'Going to green.')
                 self.goto(self.green[0],self.green[1],self.green[2])       
                 self.wait(self.time_to_wait)  
 
             rospy.loginfo(f'Open gripper')
             self.gripper_open()
-            self.wait(self.time_to_wait)  
-
-            rospy.loginfo(f'Going to half.')
-            self.goto(self.half[0],self.half[1],self.half[2])       
             self.wait(self.time_to_wait)  
 
         rospy.loginfo(f'Going to home.')
@@ -120,19 +98,20 @@ class arm_control():
         self.pub.publish(ps)
 
     def gripper_open(self):
-        goal = MoveGoal
+        goal = MoveGoal()
         goal.width = 0.08
         goal.speed = 0.2
         self.action_client_open.send_goal(goal)
 
     def gripper_close(self):
-        goal = GraspGoal
+        goal = GraspGoal()
         goal.width = 0.04
-        goal.speed = 0.2
-        goal.force = 0.5
-        goal.epsilon.inner = 0.02
-        goal.epsilon.outer = 0.02
+        goal.speed = 0.01
+        goal.force = 20
+        goal.epsilon.inner = 0.05
+        goal.epsilon.outer = 0.05
         self.action_client_close.send_goal(goal)
+        self.action_client_close.wait_for_result()
 
     def wait(self, max_seconds):
         start = time.time()
