@@ -1,0 +1,51 @@
+version: '2'
+
+networks:
+  ros_network:
+
+services:
+  
+  xserver:
+    image: devrt/xserver
+    environment:
+      - DISPLAY=:9
+    ports:
+      - "3000:80"
+    networks:
+      - ros_network
+
+  ros-master:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    image: arm_challenge:latest
+    depends_on:
+      - xserver
+    volumes_from:
+      - xserver
+    environment:
+      - DISPLAY=:9
+    tty: true
+    networks:
+      - ros_network
+    command:
+      - /bin/bash
+      - -c
+      - |
+        roslaunch arm_challenge start.launch
+
+
+  solution:
+    image: arm_challenge:latest
+    volumes:
+      - ${PWD}:/catkin_ws/src/arm_challenge:rw
+    environment:  
+      ROS_MASTER_URI: http://ros-master:11311    
+    tty: true
+    networks:
+      - ros_network
+    command:
+      - /bin/bash
+      - -c
+      - |
+        rosrun arm_challenge arm_control.py

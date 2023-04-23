@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<launch>
+
+  <include file="$(find arm_gazebo)/launch/arm_panda.launch">
+    <arg name="world" value="$(find arm_gazebo)/worlds/arm_empty.world"/>
+    <arg name="x" value="-0.10"/>
+    <arg name="y" value="0"/>
+    <arg name="z" value="0.615"/>
+  </include>
+
+  <node name="objects_spawner"
+        pkg="arm_gazebo"
+        type="gazebo_objects.py"
+        args="-a $(find arm_gazebo)/config/ARM0.txt"
+        launch-prefix="bash -c 'sleep 15; $0 $@' " 
+  />
+
+</launch>
+
+

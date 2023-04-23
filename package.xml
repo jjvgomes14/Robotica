@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>arm_challenge</name>
+  <version>0.0.0</version>
+  <description>
+    Control for RoboCup ARM challenge
+  </description>
+
+  <maintainer email="fagnerpimentel@gmail.com">Fagner Pimentel</maintainer>
+  <author email="fagnerpimentel@gmail.com">Fagner Pimentel</author>
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <export>
+  </export>
+
+</package>
