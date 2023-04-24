@@ -16,5 +16,8 @@ jobs:
         os: [ubuntu-latest, windows-latest, macOS-latest]
                 
     steps:
+    
+    - uses: actions/checkout@v3
+
     - name: Build
       run: docker-compose build
