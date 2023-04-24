@@ -1,8 +1,5 @@
 version: '2'
 
-# networks:
-  # ros_network:
-
 services:
   
   xserver:
@@ -11,8 +8,6 @@ services:
       - DISPLAY=:9
     ports:
       - "3000:80"
-    # networks:
-      # - ros_network
 
   ros-master:
     build: 
@@ -26,8 +21,6 @@ services:
     environment:
       - DISPLAY=:9
     tty: true
-    # networks:
-      # - ros_network
     command:
       - /bin/bash
       - -c
@@ -38,12 +31,10 @@ services:
   solution:
     image: arm_challenge:latest
     volumes:
-      - ${PWD}:/catkin_ws/src/arm_challenge:rw
+      - .:/catkin_ws/src/arm_challenge:rw
     environment:  
       ROS_MASTER_URI: http://ros-master:11311    
     tty: true
-    # networks:
-      # - ros_network
     command:
       - /bin/bash
       - -c
