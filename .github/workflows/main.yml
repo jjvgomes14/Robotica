@@ -24,6 +24,7 @@ jobs:
           docker-compose build
         elif [ "$RUNNER_OS" == "macOS" ]; then
           brew install docker docker-machine docker-compose
+          sudo service docker start
           docker-compose build
         else
           echo "$RUNNER_OS not supported"
