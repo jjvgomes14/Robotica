@@ -28,7 +28,7 @@ jobs:
       if: startsWith(runner.os, 'Windows')
       run: |
         "C:\Program Files\Docker\Docker\DockerCli.exe -SwitchDaemon"
-        docker-compose build
+        DOCKER_DEFAULT_PLATFORM=linux/amd64 docker-compose build
         
     - uses: actions/checkout@v3
     - name: Build
