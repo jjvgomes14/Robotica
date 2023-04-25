@@ -19,14 +19,21 @@ jobs:
     
     - uses: actions/checkout@v3
     - name: Build
+      if: startsWith(runner.os, 'Linux')
       run: |
-        if( [ "$RUNNER_OS" == "Linux" ]); then
-          docker-compose build
-        elif( [ "$RUNNER_OS" == "Windows" ]); then
-          "C:\Program Files\Docker\Docker\DockerCli.exe" -SwitchLinuxEngine
-          docker-compose build
-        elif( [ "$RUNNER_OS" == "macOS" ]); then
-          brew install colima docker docker-machine docker-compose
-          colima start
-          docker-compose build
-        fi
+        docker-compose build
+
+    - uses: actions/checkout@v3
+    - name: Build
+      if: startsWith(runner.os, 'Windows')
+      run: |
+        "C:\Program Files\Docker\Docker\DockerCli.exe" -SwitchLinuxEngine
+        docker-compose build
+        
+    - uses: actions/checkout@v3
+    - name: Build
+      if: startsWith(runner.os, 'macOS')
+      run: |
+        brew install colima docker docker-machine docker-compose
+        colima start
+        docker-compose build
