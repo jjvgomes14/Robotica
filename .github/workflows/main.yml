@@ -26,7 +26,7 @@ jobs:
         elif [ "$RUNNER_OS" == "Windows" ]; then
           C:\Program Files\Docker\Docker\DockerCli.exe -SwitchLinuxEngine
           docker-compose build
-          timeout 1m docker-compose up && || [ $? -eq 124 ]
+          timeout 1m docker-compose up || [ $? -eq 124 ]
         elif [ "$RUNNER_OS" == "macOS" ]; then
           brew install coreutils colima docker docker-machine docker-compose
           colima start
