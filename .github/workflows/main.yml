@@ -23,8 +23,8 @@ jobs:
         if [ "$RUNNER_OS" == "Linux" ]; then
           docker-compose build
         elif [ "$RUNNER_OS" == "macOS" ]; then
-          brew install docker docker-machine docker-compose
-          sudo service docker start
+          brew install colima docker docker-machine docker-compose
+          colima start
           docker-compose build
         else
           echo "$RUNNER_OS not supported"
