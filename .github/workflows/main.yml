@@ -13,27 +13,23 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest]
                 
     steps:
     
     - uses: actions/checkout@v3
     - name: Build
-      if: startsWith(runner.os, 'Linux')
       run: |
-        docker-compose build
-
-    - uses: actions/checkout@v3
-    - name: Build
-      if: startsWith(runner.os, 'Windows')
-      run: |
-        "C:\Program Files\Docker\Docker\DockerCli.exe -SwitchDaemon"
-        DOCKER_DEFAULT_PLATFORM=linux/amd64 docker-compose build
-        
-    - uses: actions/checkout@v3
-    - name: Build
-      if: startsWith(runner.os, 'macOS')
-      run: |
-        brew install colima docker docker-machine docker-compose
-        colima start
-        docker-compose build
+        if [ "$RUNNER_OS" == "Linux" ]; then
+          docker-compose build
+        elif [ "$RUNNER_OS" == "Windows" ]; then
+          C:\Program Files\Docker\Docker\DockerCli.exe -SwitchLinuxEngine
+          docker-compose build
+        elif [ "$RUNNER_OS" == "macOS" ]; then
+          brew install colima docker docker-machine docker-compose
+          colima start
+          docker-compose build
+        else
+          echo "$RUNNER_OS not supported"
+          exit 1
+        fi
