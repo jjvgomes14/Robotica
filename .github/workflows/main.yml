@@ -26,7 +26,4 @@ jobs:
           brew install colima docker docker-machine docker-compose
           colima start
           docker-compose build
-        else
-          echo "$RUNNER_OS not supported"
-          exit 1
         fi
