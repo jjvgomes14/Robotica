@@ -13,9 +13,20 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest]
                 
     steps:
+    
     - uses: actions/checkout@v3
     - name: Build
-      run: docker-compose build
+      if: matrix.os == ubuntu-latest
+      run: |
+        docker-compose build
+      
+    - uses: actions/checkout@v3
+    - name: Build
+      if: matrix.os == macos-latest
+      run: |
+        brew install docker docker-machine docker-compose
+        docker-compose build
+        
