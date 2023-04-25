@@ -22,16 +22,16 @@ jobs:
       run: |
         if [ "$RUNNER_OS" == "Linux" ]; then
           docker-compose build
-          timeout 1m docker-compose up && [ $? -eq 0 -o $? -eq 124 ]
+          timeout 1m docker-compose up || [ $? -eq 124 ]
         elif [ "$RUNNER_OS" == "Windows" ]; then
           C:\Program Files\Docker\Docker\DockerCli.exe -SwitchLinuxEngine
           docker-compose build
-          timeout 1m docker-compose up && [ $? -eq 0 -o $? -eq 124 ]
+          timeout 1m docker-compose up && || [ $? -eq 124 ]
         elif [ "$RUNNER_OS" == "macOS" ]; then
           brew install coreutils colima docker docker-machine docker-compose
           colima start
           docker-compose build
-          gtimeout 1m docker-compose up && [ $? -eq 0 -o $? -eq 124 ]
+          gtimeout 1m docker-compose up || [ $? -eq 124 ]
         else
           echo "$RUNNER_OS not supported"
           exit 1
