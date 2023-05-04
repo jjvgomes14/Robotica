@@ -18,6 +18,8 @@ services:
       - xserver
     volumes_from:
       - xserver
+    volumes:
+      - ${PWD}:/catkin_ws/src/arm_challenge:rw
     environment:
       - DISPLAY=:9
     tty: true
@@ -30,13 +32,18 @@ services:
 
   solution:
     image: arm_challenge:latest
+    depends_on:
+      - ros-master
+    volumes_from:
+      - ros-master
     volumes:
       - .:/catkin_ws/src/arm_challenge:rw
     environment:  
-      ROS_MASTER_URI: http://ros-master:11311    
+      - ROS_MASTER_URI=http://ros-master:11311    
+      - DISPLAY=:9
     tty: true
     command:
       - /bin/bash
       - -c
       - |
-        rosrun arm_challenge arm_control.py
+        roslaunch arm_challenge solution.launch
