@@ -33,7 +33,7 @@ services:
   solution:
     image: arm_challenge:latest
     depends_on:
-      - ros-master\
+      - ros-master
     volumes_from:
       - ros-master
     volumes:

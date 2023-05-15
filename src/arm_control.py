@@ -3,19 +3,23 @@
 import rospy
 import time
 import actionlib
+import cv2
+from cv_bridge import CvBridge, CvBridgeError
 
 from math import pi
 from geometry_msgs.msg import PoseStamped
 from tf.transformations import euler_from_quaternion, quaternion_from_euler
 from franka_gripper.msg import MoveAction, MoveGoal
 from franka_gripper.msg import GraspAction, GraspGoal
+from sensor_msgs.msg import Image
 
 class arm_control():
  
     def __init__(self):
         self.time_to_wait = 5.0
 
-        self sub = rospy.Subscriber("chatter", String, callback);
+        self.bridge = CvBridge()
+        rospy.Subscriber("/camera/rgb/image_raw", Image, self.callback);
 
         self.pub = rospy.Publisher("/cartesian_impedance_example_controller/equilibrium_pose", PoseStamped, queue_size=50)
         self.action_client_open = actionlib.SimpleActionClient("/franka_gripper/move", MoveAction)
@@ -98,7 +102,22 @@ class arm_control():
             self.goto(self.home[0],self.home[1],self.home[2])       
             self.wait(self.time_to_wait)  
 
+
+    def callback(self, data):
+        try:
+            cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
+        except CvBridgeError as e:
+            print(e)
+
+        (rows,cols,channels) = cv_image.shape
+        if cols > 60 and rows > 60 :
+            cv2.circle(cv_image, (50,50), 10, 255)
+
+        cv2.imshow("Image window", cv_image)
+        cv2.waitKey(3)
+
     def goto(self, x, y, z):
+        rospy.loginfo(f'goto')
 
         quaternion = quaternion_from_euler(-pi,0,0)
         ps = PoseStamped()
@@ -128,12 +147,12 @@ class arm_control():
         self.action_client_close.wait_for_result()
 
     def wait(self, max_seconds):
-        rospy.sleep(max_seconds)
+        # rospy.sleep(max_seconds)
 
-        # start = time.time()
-        # count = 0
-        # while count < max_seconds:
-        #     count = time.time() - start            
+        start = time.time()
+        count = 0
+        while count < max_seconds:
+            count = time.time() - start            
 
 if __name__ == '__main__':
     rospy.init_node('arm_control', log_level=rospy.INFO)
