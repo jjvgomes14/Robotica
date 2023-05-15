@@ -19,7 +19,7 @@ services:
     volumes_from:
       - xserver
     volumes:
-      - ${PWD}:/catkin_ws/src/arm_challenge:rw
+      - .:/catkin_ws/src/arm_challenge:rw
     environment:
       - DISPLAY=:9
     tty: true
@@ -33,7 +33,7 @@ services:
   solution:
     image: arm_challenge:latest
     depends_on:
-      - ros-master
+      - ros-master\
     volumes_from:
       - ros-master
     volumes:

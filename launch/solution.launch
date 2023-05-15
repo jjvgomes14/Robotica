@@ -4,6 +4,7 @@
   <node name="solution"
         pkg="arm_challenge"
         type="arm_control.py" 
+        output="screen"
   />
 
 </launch>
