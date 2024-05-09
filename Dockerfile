@@ -21,6 +21,7 @@ RUN mkdir src
 RUN mkdir src/arm_challenge
 COPY * src/arm_challenge/
 RUN git clone https://github.com/iocchi/arm_gazebo.git src/arm_gazebo
+RUN cd src/arm_gazebo && git checkout cfef9ae32c198c8f7c8ba68326ad06ca3d558847
 RUN ./src/arm_challenge/install_dependencies.sh
 RUN source /opt/ros/noetic/setup.bash && catkin_make
 
