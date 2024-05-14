@@ -27,23 +27,24 @@ services:
       - /bin/bash
       - -c
       - |
-        roslaunch arm_challenge start.launch
+        source /catkin_ws/devel/setup.bash
+        roscore
 
 
-  solution:
-    image: arm_challenge:latest
-    depends_on:
-      - ros-master
-    volumes_from:
-      - ros-master
-    volumes:
-      - .:/catkin_ws/src/arm_challenge:rw
-    environment:  
-      - ROS_MASTER_URI=http://ros-master:11311    
-      - DISPLAY=:9
-    tty: true
-    command:
-      - /bin/bash
-      - -c
-      - |
-        roslaunch arm_challenge solution.launch
+  # solution:
+  #   image: arm_challenge:latest
+  #   depends_on:
+  #     - ros-master
+  #   volumes_from:
+  #     - ros-master
+  #   volumes:
+  #     - .:/catkin_ws/src/arm_challenge:rw
+  #   environment:  
+  #     - ROS_MASTER_URI=http://ros-master:11311    
+  #     - DISPLAY=:9
+  #   tty: true
+  #   command:
+  #     - /bin/bash
+  #     - -c
+  #     - |
+  #       roslaunch arm_challenge solution.launch
