@@ -1,5 +1,3 @@
-version: '2'
-
 services:
   
   xserver:
@@ -28,23 +26,24 @@ services:
       - -c
       - |
         source /catkin_ws/devel/setup.bash
-        roscore
+        roslaunch arm_challenge start.launch
 
-
-  # solution:
-  #   image: arm_challenge:latest
-  #   depends_on:
-  #     - ros-master
-  #   volumes_from:
-  #     - ros-master
-  #   volumes:
-  #     - .:/catkin_ws/src/arm_challenge:rw
-  #   environment:  
-  #     - ROS_MASTER_URI=http://ros-master:11311    
-  #     - DISPLAY=:9
-  #   tty: true
-  #   command:
-  #     - /bin/bash
-  #     - -c
-  #     - |
-  #       roslaunch arm_challenge solution.launch
+  solution:
+    image: arm_challenge:latest
+    depends_on:
+      - ros-master
+    volumes_from:
+      - ros-master
+    volumes:
+      - .:/catkin_ws/src/arm_challenge:rw
+    environment:  
+      - ROS_MASTER_URI=http://ros-master:11311    
+      - DISPLAY=:9
+    tty: true
+    command:
+      - /bin/bash
+      - -c
+      - |
+        source /catkin_ws/devel/setup.bash
+        dos2unix src/arm_challenge/src/arm_control.py
+        roslaunch arm_challenge solution.launch

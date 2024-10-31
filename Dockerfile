@@ -12,7 +12,8 @@ RUN apt-get install -y \
     apt-utils \
     git \
     python3 \
-    python-is-python3 
+    python-is-python3 \
+    dos2unix
 
 # Install workspace
 RUN mkdir /catkin_ws
