@@ -35,11 +35,14 @@ class arm_control():
         self.auxgreen = [-0.1000,  0.5, 0.800];
 
         destinations = [
-            ['bBottle1' ,'blue' , 'bottle' ,'blue', -0.1700, -0.4600, 0.6135],
-            # ['rCan2'    ,'red'  , 'can'    ,'blue', -0.0774, -0.6800, 0.6901],
-            # ['gCan3'    ,'green', 'can'    ,'blue', -0.0771, -0.6800, 0.5734],
-            ['gCan1'    ,'green', 'can'    ,'blue', -0.1067,  0.3634, 0.6900],
-            # ['rCan1'    ,'red'  , 'can'    ,'blue',  0.2950,  0.5031, 0.5857],
+            ['bBottle1' ,'blue' , 'bottle' ,'blue', -0.1700, -0.4600, 0.6135], #FUNCIONA
+            ['bBottle2' ,'blue' , 'bottle' ,'blue', 0.0733, 0.2300, 0.6135], #FUNCIONA
+            #['yBottle2' ,'blue' , 'bottle' ,'blue', 0.6000, -0.1600, 0.6135], #FALTA X E BATE
+            ['yBottle3' ,'blue' , 'bottle' ,'blue', 0.3063, 0.1509, 0.6135], #FUNCIONA
+            ['rCan2'    ,'red'  , 'can'    ,'blue', -0.08258, -0.66861, 0.69004], #FUNCIONA
+            ['gCan3'    ,'green', 'can'    ,'blue', -0.08180, -0.66826, 0.57327], #FUNCIONA
+            #['gCan1'    ,'green', 'can'    ,'blue', -0.1063,  0.3632, 0.6822],
+            #['rCan1'    ,'red'  , 'can'    ,'blue',  0.2952,  0.5027, 0.5732],
         ]
 
         rospy.loginfo(f'Going to home.')
@@ -54,7 +57,6 @@ class arm_control():
                 shift2 = 0.06  # no ponto de grasp
             if(d[2]=='can'):
                 shift2 = 0.02  # no ponto de grasp
-
 
             rospy.loginfo(f'Going to {d[0]} head.')
             self.goto(d[4],d[5],d[6]+shift1)       
@@ -76,6 +78,10 @@ class arm_control():
             self.goto(d[4],d[5],d[6]+shift1)       
             self.wait(self.time_to_wait)  
 
+            rospy.loginfo(f'Going to home.')
+            self.goto(self.home[0],self.home[1],self.home[2])       
+            self.wait(self.time_to_wait)  
+
             if(d[3] == 'blue'):
                 rospy.loginfo(f'Going to blue.')
                 self.goto(self.blue[0],self.blue[1],self.blue[2])       
@@ -88,15 +94,6 @@ class arm_control():
             rospy.loginfo(f'Open gripper')
             self.gripper_open()
             self.wait(self.time_to_wait)  
-
-            if(d[3] == 'blue'):
-                rospy.loginfo(f'Going to aux blue.')
-                self.goto(self.auxblue[0],self.auxblue[1],self.auxblue[2])       
-                self.wait(self.time_to_wait)  
-            if(d[3] == 'green'):
-                rospy.loginfo(f'Going to aux green.')
-                self.goto(self.auxgreen[0],self.auxgreen[1],self.auxgreen[2])       
-                self.wait(self.time_to_wait)  
 
             rospy.loginfo(f'Going to home.')
             self.goto(self.home[0],self.home[1],self.home[2])       

@@ -36,10 +36,10 @@ class arm_control():
 
         destinations = [
             ['bBottle1' ,'blue' , 'bottle' ,'blue', -0.1700, -0.4600, 0.6135],
-            # ['rCan2'    ,'red'  , 'can'    ,'blue', -0.0774, -0.6800, 0.6901],
-            # ['gCan3'    ,'green', 'can'    ,'blue', -0.0771, -0.6800, 0.5734],
-            ['gCan1'    ,'green', 'can'    ,'blue', -0.1067,  0.3634, 0.6900],
-            # ['rCan1'    ,'red'  , 'can'    ,'blue',  0.2950,  0.5031, 0.5857],
+            ['rCan2'    ,'red'  , 'can'    ,'blue', -0.0820, -0.6582, 0.6900],
+            ['gCan3'    ,'green', 'can'    ,'blue', -0.0812, -0.6597, 0.5732],
+            ['gCan1'    ,'green', 'can'    ,'blue', -0.1070,  0.3627, 0.6819],
+            ['rCan1'    ,'red'  , 'can'    ,'blue',  0.2955,  0.5021, 0.5729],
         ]
 
         rospy.loginfo(f'Going to home.')
@@ -76,6 +76,10 @@ class arm_control():
             self.goto(d[4],d[5],d[6]+shift1)       
             self.wait(self.time_to_wait)  
 
+            rospy.loginfo(f'Going to home.')
+            self.goto(self.home[0],self.home[1],self.home[2])       
+            self.wait(self.time_to_wait)  
+
             if(d[3] == 'blue'):
                 rospy.loginfo(f'Going to blue.')
                 self.goto(self.blue[0],self.blue[1],self.blue[2])       
@@ -89,14 +93,14 @@ class arm_control():
             self.gripper_open()
             self.wait(self.time_to_wait)  
 
-            if(d[3] == 'blue'):
-                rospy.loginfo(f'Going to aux blue.')
-                self.goto(self.auxblue[0],self.auxblue[1],self.auxblue[2])       
-                self.wait(self.time_to_wait)  
-            if(d[3] == 'green'):
-                rospy.loginfo(f'Going to aux green.')
-                self.goto(self.auxgreen[0],self.auxgreen[1],self.auxgreen[2])       
-                self.wait(self.time_to_wait)  
+            #if(d[3] == 'blue'):
+            #    rospy.loginfo(f'Going to aux blue.')
+            #    self.goto(self.auxblue[0],self.auxblue[1],self.auxblue[2])       
+            #    self.wait(self.time_to_wait)  
+            #if(d[3] == 'green'):
+            #    rospy.loginfo(f'Going to aux green.')
+            #    self.goto(self.auxgreen[0],self.auxgreen[1],self.auxgreen[2])       
+            #    self.wait(self.time_to_wait)  
 
             rospy.loginfo(f'Going to home.')
             self.goto(self.home[0],self.home[1],self.home[2])       
