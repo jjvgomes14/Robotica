@@ -37,7 +37,7 @@ class arm_control():
         destinations = [
             ['bBottle1' ,'blue' , 'bottle' ,'blue', -0.1700, -0.4600, 0.6135],
             ['rCan2'    ,'red'  , 'can'    ,'blue', -0.0820, -0.6582, 0.6900],
-            ['gCan3'    ,'green', 'can'    ,'blue', -0.0812, -0.6597, 0.5732],
+            ['gCan3'    ,'green', 'can'    ,'green', -0.0812, -0.6597, 0.5732],
             ['gCan1'    ,'green', 'can'    ,'blue', -0.1070,  0.3627, 0.6819],
             ['rCan1'    ,'red'  , 'can'    ,'blue',  0.2955,  0.5021, 0.5729],
         ]

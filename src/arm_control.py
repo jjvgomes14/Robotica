@@ -31,18 +31,13 @@ class arm_control():
         self.home  = [ 0.1000,  0.0, 1.000];
         self.blue  = [-0.4652, -0.5, 0.800];
         self.green = [-0.4652,  0.5, 0.800];
-        self.auxblue  = [-0.1000, -0.5, 0.800];
-        self.auxgreen = [-0.1000,  0.5, 0.800];
 
         destinations = [
-            ['bBottle1' ,'blue' , 'bottle' ,'blue', -0.1700, -0.4600, 0.6135], #FUNCIONA
-            ['bBottle2' ,'blue' , 'bottle' ,'blue', 0.0733, 0.2300, 0.6135], #FUNCIONA
-            #['yBottle2' ,'blue' , 'bottle' ,'blue', 0.6000, -0.1600, 0.6135], #FALTA X E BATE
-            ['yBottle3' ,'blue' , 'bottle' ,'blue', 0.3063, 0.1509, 0.6135], #FUNCIONA
-            ['rCan2'    ,'red'  , 'can'    ,'blue', -0.08258, -0.66861, 0.69004], #FUNCIONA
-            ['gCan3'    ,'green', 'can'    ,'blue', -0.08180, -0.66826, 0.57327], #FUNCIONA
-            #['gCan1'    ,'green', 'can'    ,'blue', -0.1063,  0.3632, 0.6822],
-            #['rCan1'    ,'red'  , 'can'    ,'blue',  0.2952,  0.5027, 0.5732],
+            ['bBottle1' ,'blue'  , 'bottle' ,'blue',  -0.1700,  -0.4600,  0.6135], 
+            ['bBottle2' ,'blue'  , 'bottle' ,'blue',   0.0733,   0.2300,  0.6135], 
+            ['yBottle3' ,'blue'  , 'bottle' ,'blue',   0.3063,   0.1509,  0.6135], 
+            ['rCan2'    ,'red'   , 'can'    ,'green', -0.08258, -0.66861, 0.69004], 
+            ['gCan3'    ,'green' , 'can'    ,'green', -0.08180, -0.66826, 0.57327], 
         ]
 
         rospy.loginfo(f'Going to home.')
