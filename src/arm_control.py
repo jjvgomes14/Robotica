@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+#Todas informações no arquivo README.md
 
 import rospy
 import time
@@ -27,8 +28,8 @@ class arm_control():
         self.action_client_open.wait_for_server()
         self.action_client_close.wait_for_server()
 
-        self.base  = [-0.1000,  0.0, 0.615];
-        self.home  = [ 0.1000,  0.0, 1.000];
+        self.base  = [-0.1000,  0.0, 0.615]; 
+        self.home  = [ 0.1000,  0.0, 1.000]; 
         self.blue  = [-0.4652, -0.5, 0.800];
         self.green = [-0.4652,  0.5, 0.800];
 
